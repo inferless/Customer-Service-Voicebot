@@ -19,6 +19,7 @@ from piper.voice import PiperVoice
 
 class InferlessPythonModel:
     def initialize(self):
+        self.audio_file = "output.mp3"
         # Initialize tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained('NousResearch/Hermes-2-Pro-Llama-3-8B', trust_remote_code=True)
 
@@ -90,7 +91,7 @@ class InferlessPythonModel:
         self.base64_to_mp3(audio_data, self.audio_file)
 
         # Transcribe audio file
-        segments, info = self.model_whisper.transcribe(self.audio_file = "output.mp3", beam_size=5)
+        segments, info = self.model_whisper.transcribe(self.audio_file, beam_size=5)
         user_text = ''.join([segment.text for segment in segments])
 
         # Prepare messages for chat template
