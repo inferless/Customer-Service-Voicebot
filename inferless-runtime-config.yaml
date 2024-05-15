@@ -12,5 +12,4 @@ build:
     - "faster-whisper==1.0.2"
     - "nltk==3.8.1"
     - "transformers==4.40.2"
-    - "pinecone-client== 3.2.2"
-    - "flash-attn==2.5.8"
+    - "pinecone-client==3.2.2"
