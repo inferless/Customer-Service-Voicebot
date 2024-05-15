@@ -124,7 +124,7 @@ class InferlessPythonModel:
         audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
 
         return {"generated_audio_base64": audio_base64,
-               "question":user_text
+               "question":user_text,
                "answer":response.response}
 
     def finalize(self):
