@@ -12,7 +12,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import Settings
 from transformers import AutoTokenizer
 from llama_index.vector_stores.pinecone import PineconeVectorStore
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 from faster_whisper import WhisperModel
 import wave
 from piper.voice import PiperVoice
@@ -41,9 +41,12 @@ class InferlessPythonModel:
         Settings.embed_model = self.embed_model
         Settings.chunk_size = 1024
 
+        #Load the Dataset to Pinecone
+        self.load_dataset()
+
         # Initialize Pinecone
         self.pc = Pinecone(api_key="153e3e06-a636-4925-bd3f-82b3349d59eb")
-        self.index = self.pc.Index("documents")
+        self.index = self.pc.Index("document")
 
         # Initialize vector store and query engine
         self.vector_store = PineconeVectorStore(pinecone_index=self.index)
@@ -71,6 +74,36 @@ class InferlessPythonModel:
         mp3_data = base64.b64decode(base64_data)
         with open(output_file_path, "wb") as mp3_file:
             mp3_file.write(mp3_data)
+
+    def load_dataset(self):
+        # Setup dataset directory and file path
+        dataset_dir = "dataset"
+        os.makedirs(dataset_dir, exist_ok=True)
+        dataset_path = os.path.join(dataset_dir, "SpotifyCustomerSupport.txt")
+        
+        # Download dataset if it doesn't exist
+        if not os.path.exists(dataset_path):
+            url = "https://github.com/inferless/Customer-Service-Chatbot/raw/main/SpotifyCustomerSupport.txt"
+            response = requests.get(url)
+            response.raise_for_status()
+            with open(dataset_path, 'wb') as f:
+                f.write(response.content)
+        
+            # Load documents and initialize Pinecone
+            documents = SimpleDirectoryReader(dataset_dir).load_data()
+            pc = Pinecone(api_key="153e3e06-a636-4925-bd3f-82b3349d59eb")
+            pc.create_index(
+                name="document",
+                dimension=384,
+                metric="euclidean",
+                spec=ServerlessSpec(cloud="aws", region="us-east-1"),
+            )
+            index = pc.Index("document")
+            
+            # Setup vector store and storage context
+            vector_store = PineconeVectorStore(pinecone_index=index)
+            storage_context = StorageContext.from_defaults(vector_store=vector_store)
+            index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
 
     def download_model(self):
         if not os.path.exists(self.model_path):
