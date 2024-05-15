@@ -1,0 +1,16 @@
+build:
+  python_packages:
+    - "llama-index==0.10.36"
+    - "llama-index-core==0.10.36"
+    - "llama-index-embeddings-huggingface==0.2.0"
+    - "llama-index-llms-vllm==0.1.7"
+    - "llama-index-vector-stores-pinecone==0.1.7"
+    - "llamaindex-py-client==0.1.19"
+    - "vllm==0.4.2"
+    - "piper-tts==1.2.0"
+    - "onnxruntime-gpu==1.17.1"
+    - "faster-whisper==1.0.2"
+    - "nltk==3.8.1"
+    - "transformers==4.40.2"
+    - "pinecone-client== 3.2.2"
+    - "flash-attn==2.5.8"
