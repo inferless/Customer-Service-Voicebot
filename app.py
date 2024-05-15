@@ -83,7 +83,7 @@ class InferlessPythonModel:
         
         # Download dataset if it doesn't exist
         if not os.path.exists(dataset_path):
-            url = "https://github.com/inferless/Customer-Service-Chatbot/raw/main/SpotifyCustomerSupport.txt"
+            url = "https://github.com/inferless/Customer-Service-Voicebot/raw/main/SpotifyCustomerSupport.txt"
             response = requests.get(url)
             response.raise_for_status()
             with open(dataset_path, 'wb') as f:
