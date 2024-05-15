@@ -123,7 +123,9 @@ class InferlessPythonModel:
         # Encode audio bytes to Base64 string
         audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
 
-        return {"generated_audio_base64": audio_base64}
+        return {"generated_audio_base64": audio_base64,
+               "question":user_text
+               "answer":response.response}
 
     def finalize(self):
         # Clear GPU memory (implementation depends on the framework used)
