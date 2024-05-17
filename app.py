@@ -45,7 +45,7 @@ class InferlessPythonModel:
         self.load_dataset()
 
         # Initialize Pinecone
-        self.pc = Pinecone(api_key="153e3e06-a636-4925-bd3f-82b3349d59eb")
+        self.pc = Pinecone(api_key="YOUR-API-KEY")
         self.index = self.pc.Index("document")
 
         # Initialize vector store and query engine
