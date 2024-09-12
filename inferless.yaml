@@ -26,6 +26,9 @@ configuration:
   max_replica: '1'
   min_replica: '0'
   scale_down_delay: '600'
+  region: region-2
+  vcpu: '20.0'
+  ram: '200'
 env:
   # Add your environment variables here
   # ENV: 'PROD'
@@ -37,6 +40,6 @@ optional:
   input_file_name: input.json
   output_file_name: output.json
   runtime_file_name: inferless-runtime-config.yaml
-model_url: https://github.com/inferless/YouTube-Video-Summarizer.git
+model_url: https://github.com/inferless/Customer-Service-Voicebot.git
 provider: GITHUB
 io_schema: true
