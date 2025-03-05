@@ -1,4 +1,6 @@
 import os
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"]='1'
+from huggingface_hub import snapshot_download
 import time
 import nltk
 import io
@@ -21,7 +23,9 @@ class InferlessPythonModel:
     def initialize(self):
         self.audio_file = "output.mp3"
         # Initialize tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained('NousResearch/Hermes-2-Pro-Llama-3-8B', trust_remote_code=True)
+        model_id = 'NousResearch/Hermes-2-Pro-Llama-3-8B'
+        snapshot_download(repo_id=model_id,allow_patterns=["*.safetensors"])
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
 
         # Initialize LLM
         self.llm = Vllm(
