@@ -95,7 +95,7 @@ class InferlessPythonModel:
         
             # Load documents and initialize Pinecone
             documents = SimpleDirectoryReader(dataset_dir).load_data()
-            pc = Pinecone(api_key="153e3e06-a636-4925-bd3f-82b3349d59eb")
+            pc = Pinecone(api_key="YOUR-API-KEY")
             pc.create_index(
                 name="document",
                 dimension=384,
