@@ -34,7 +34,7 @@ class InferlessPythonModel:
             top_k=10,
             top_p=0.95,
             temperature=0.1,
-            vllm_kwargs={"swap_space": 1, "gpu_memory_utilization": 0.9},
+            vllm_kwargs={"swap_space": 1, "gpu_memory_utilization": 0.5},
         )
 
         # Initialize embedding model
